@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard del Gestor de Microservicios</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body
+    data-text-installed="INSTALADO"
+    data-text-not-installed="NO INSTALADO"
+    data-text-connected="CONECTADO"
+    data-text-disconnected="DESCONECTADO"
+    data-text-error="ERROR"
+    data-text-retrying="Reintentando en 5s..."
+    data-text-official-guide="Instalar"
+    data-text-service="Servicio"
+    data-text-status="Estado"
+    data-text-details="Detalles"
+    data-text-actions="Acciones"
+    data-text-category-managed="Servicios Gestionados (Docker)"
+    data-text-category-verified="Herramientas del Entorno"
+    data-text-category-runtimes="Runtimes y Entornos"
+    data-text-category-containers="Contenerización y Virtualización"
+    data-text-category-gaming="Desarrollo de Videojuegos"
+    data-text-category-devops="DevOps e Infraestructura"
+    data-text-category-databases="Bases de Datos y Caché"
+    data-text-category-messaging="Mensajería y Event Streaming"
+    data-text-category-api="API, Búsqueda y Logging"
+    data-text-category-security="Seguridad"
+>
+
+    <main class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><strong>Dashboard del Gestor de Microservicios</strong></li>
+                </ul>
+                <ul>
+                    <li><span class="lang-selected">Español</span></li>
+                    <li><a href="/static/en.html">English</a></li>
+                    <span style="margin: 0 20px;">|</span>
+                    <li>
+                        <label for="theme-switch">
+                            <input type="checkbox" id="theme-switch" name="theme-switch" role="switch">
+                            ◐
+                        </label>
+                    </li>
+                </ul>
+            </nav>
+            <p>Estado de la Conexión: <span id="connectionStatus" class="connection-fail">DESCONECTADO</span></p>
+        </header>
+
+        <hr>
+
+        <div class="espaciador"></div>
+
+        <section>
+            <h2>Estado del Entorno</h2>
+            <div id="loading" aria-busy="true">Comprobando servicios, por favor espere...</div>
+            <div id="statusContainer">
+                <!-- Las tablas de categorías se insertarán aquí dinámicamente -->
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

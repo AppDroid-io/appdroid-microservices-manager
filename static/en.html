@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices Manager Dashboard</title>
+    <link rel="stylesheet" href="/static/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body
+    data-text-installed="INSTALLED"
+    data-text-not-installed="NOT INSTALLED"
+    data-text-connected="CONNECTED"
+    data-text-disconnected="DISCONNECTED"
+    data-text-error="ERROR"
+    data-text-retrying="Retrying in 5s..."
+    data-text-official-guide="Install"
+    data-text-service="Service"
+    data-text-status="Status"
+    data-text-details="Details"
+    data-text-actions="Actions"
+    data-text-category-managed="Managed Services (Docker)"
+    data-text-category-verified="Environment Tools"
+    data-text-category-runtimes="Runtimes & Environments"
+    data-text-category-containers="Containerization & Virtualization"
+    data-text-category-gaming="Game Development"
+    data-text-category-devops="DevOps & Infrastructure"
+    data-text-category-databases="Databases & Cache"
+    data-text-category-messaging="Messaging & Event Streaming"
+    data-text-category-api="API, Search & Logging"
+    data-text-category-security="Security"
+>
+
+    <main class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><strong>Microservices Manager Dashboard</strong></li>
+                </ul>
+                <ul>
+                    <li><a href="/static/es.html">Español</a></li>
+                    <li><span class="lang-selected">English</span></li>
+                    <span style="margin: 0 20px;">|</span>
+                    <li>
+                        <label for="theme-switch">
+                            <input type="checkbox" id="theme-switch" name="theme-switch" role="switch">
+                            ◐
+                        </label>
+                    </li>
+                </ul>
+            </nav>
+            <p>Connection Status: <span id="connectionStatus" class="connection-fail">DISCONNECTED</span></p>
+        </header>
+
+        <hr>
+        
+        <div class="espaciador"></div>
+
+        <section>
+            <h2>Environment Status</h2>
+            <div id="loading" aria-busy="true">Checking services, please wait...</div>
+            <div id="statusContainer">
+                <!-- Dynamic category tables will be injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

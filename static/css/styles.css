@@ -1,0 +1,26 @@
+:root { --pico-card-border-color: var(--pico-contrast-border); }
+body { padding: 2rem; }
+.status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+.status-ok { background-color: #43a047; }
+.status-fail { background-color: #d32f2f; }
+.connection-status { font-weight: bold; }
+.connection-ok { color: #43a047; }
+.connection-fail { color: #d32f2f; }
+td pre { white-space: pre-wrap; word-break: break-all; margin: 0; font-size: 0.8em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.lang-selected { text-decoration: underline; font-weight: bold; }
+table { 
+    margin-bottom: 2.5rem; 
+    table-layout: fixed; /* Algoritmo de layout fijo para controlar anchos */
+    width: 100%;
+}
+table th:nth-child(1) { width: 25%; } /* Columna Servicio */
+table th:nth-child(2) { width: 20%; } /* Columna Estado */
+table th:nth-child(3) { width: 40%; } /* Columna Detalles (máximo 40%) */
+table th:nth-child(4) { width: 15%; } /* Columna Acciones */
+.actions-cell { text-align: center; }
+.actions-cell a { --pico-font-size: 0.8em; padding: 0.2rem 0.6rem; }
+.espaciador { height: 66px; width: 100%; }
+h5 { margin: 33px 0 !important; }
+h6 { margin-bottom: 33px !important; margin-top: 66px !important; }
+pre { background: none !important; }

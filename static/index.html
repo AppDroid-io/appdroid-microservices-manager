@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Idioma / Select Language</title>
+    <link rel="stylesheet" href="static/css/pico.min.css">
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <hgroup>
+            <h1>Bienvenido / Welcome</h1>
+            <p>Por favor, selecciona tu idioma / Please select your language</p>
+        </hgroup>
+        <div class="grid">
+            <a href="static/es.html" role="button" class="primary">Español</a>
+            <a href="static/en.html" role="button" class="secondary">English</a>
+        </div>
+    </main>
+    <script>
+        // Redirección automática basada en el idioma del navegador
+        /*const userLang = navigator.language.split('-')[0] || 'en';
+        if (userLang === 'es') {
+            window.location.replace('/es.html');
+        } else {
+            window.location.replace('/en.html');
+        }*/
+    </script>
+</body>
+</html>
