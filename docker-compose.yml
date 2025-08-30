@@ -1,0 +1,92 @@
+# Este archivo define todo el stack de comunicación e infraestructura.
+# Se puede levantar con: docker-compose up -d
+
+# Versión del formato de Docker Compose
+version: '3.8'
+
+# Definición de los servicios (contenedores)
+services:
+
+  # --- Bus de Eventos Principal (Streaming) ---
+
+  # Servicio 1: Zookeeper (necesario para Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.3
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  # Servicio 2: Kafka Broker
+  kafka:
+    image: confluentinc/cp-kafka:7.5.3
+    container_name: kafka
+    # Kafka depende de que Zookeeper esté levantado primero
+    depends_on:
+      - zookeeper
+    ports:
+      # Mapea el puerto 9092 del host al 9092 del contenedor para que tu app Spring pueda conectar
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      # Configuración de listeners para permitir la conexión desde tu máquina local (el host)
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  # --- Reverse Proxy y API Gateway ---
+
+  # Servicio 3: Traefik (El Proxy)
+  traefik:
+    image: "traefik:v3.0"
+    container_name: "traefik-manager-proxy"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.file.directory=/etc/traefik/conf"
+      - "--entrypoints.web.address=:80"
+    ports:
+      # El puerto HTTP
+      - "80:80"
+      # El Dashboard de Traefik (opcional, para ver qué está pasando)
+      - "8080:8080"
+    volumes:
+      # Para que Traefik pueda escuchar a otros contenedores
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      # Montamos nuestra configuración dinámica
+      - "./traefik-conf.yml:/etc/traefik/conf/dynamic.yml:ro"
+
+  # --- Broker MQTT (IoT y Móviles) ---
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    ports:
+      - "1883:1883" # Puerto estándar de MQTT
+      - "9001:9001" # Puerto para MQTT sobre WebSockets
+    volumes:
+      # Monta el archivo de configuración desde tu máquina local al contenedor
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # --- Broker AMQP (Colas de Trabajo Enterprise) ---
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # Puerto estándar de AMQP
+      - "15672:15672" # Interfaz web de gestión de RabbitMQ
+
+  # --- Broker Ligero y Caché (Pub/Sub) ---
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379" # Puerto estándar de Redis
+
+  # --- Sistema de Mensajería Moderno y de Alto Rendimiento ---
+  nats:
+    image: nats:latest
+    container_name: nats
+    ports:
+      - "4222:4222" # Puerto de cliente
+      - "8222:8222" # Puerto de monitorización HTTP
