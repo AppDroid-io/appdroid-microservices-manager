@@ -1,0 +1,57 @@
+# (EN) Byte-compiled / optimized / DLL files
+# (ES) Archivos compilados / optimizados / DLL
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# (EN) Distribution / packaging
+# (ES) Distribución / empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# (EN) Virtual Environments created by tools like venv, virtualenv
+# (ES) Entornos virtuales creados por herramientas como venv, virtualenv
+.venv/
+venv/
+env/
+ENV/
+
+# (EN) IDE / Editor specific files
+# (ES) Archivos específicos de IDEs / Editores
+.idea/
+.vscode/
+# (EN) Exception: allow sharing of recommended settings
+# (ES) Excepción: permitir compartir configuraciones recomendadas
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# (EN) Local database files
+# (ES) Archivos de bases de datos locales
+*.db
+*.sqlite3
+
+# (EN) Environment variables file - NEVER commit secrets!
+# (ES) Archivo de variables de entorno - ¡NUNCA confirmes secretos!
+.env
+
+# (EN) Testing and coverage reports
+# (ES) Informes de tests y cobertura
+.pytest_cache/
+.coverage
+htmlcov/
