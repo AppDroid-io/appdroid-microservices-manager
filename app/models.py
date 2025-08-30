@@ -3,6 +3,9 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Any, Dict
 from enum import Enum
+from .database import Base
+from sqlalchemy import Column, String, DateTime
+import datetime
 
 # (EN) Defines the valid command types, similar to the Java Enum.
 # (ES) Define los tipos de comando válidos, similar al Enum de Java.
@@ -80,3 +83,16 @@ class CommandResponse(BaseModel):
     status: str  # (EN) e.g., "success" or "error" / (ES) ej: "success" o "error"
     payload: Optional[Dict[str, Any]] = None
     error_message: Optional[str] = None
+
+# --- SQLAlchemy Model for the cache table ---
+# --- Modelo SQLAlchemy para la tabla de caché ---
+class SourceCache(Base):
+    """
+    (EN) SQLAlchemy model representing the cache of script sources.
+    (ES) Modelo SQLAlchemy que representa el caché de los orígenes de los scripts.
+    """
+    __tablename__ = "source_cache"
+
+    uri = Column(String, primary_key=True, index=True)
+    local_path = Column(String, nullable=False)
+    last_updated = Column(DateTime, default=datetime.datetime.utcnow)

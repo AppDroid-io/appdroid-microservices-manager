@@ -18,7 +18,9 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "appdroid_microservices_manager", from = "src"}]
+# (EN) This tells Poetry that our main package is the 'app' directory.
+# (ES) Esto le dice a Poetry que nuestro paquete principal es el directorio 'app'.
+packages = [{include = "app"}]
 
 
 [build-system]

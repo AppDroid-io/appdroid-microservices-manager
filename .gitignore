@@ -55,3 +55,8 @@ ENV/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# (EN) Runtime generated files and caches
+# (ES) Archivos generados en tiempo de ejecución y cachés
+/cache.db
+/appdroid_workspaces/

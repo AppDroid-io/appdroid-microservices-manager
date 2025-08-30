@@ -1,7 +1,8 @@
 # app/api/endpoints.py
 import os
 import uuid
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from pathlib import Path
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Query
 from pydantic import ValidationError
 from starlette.responses import FileResponse
 
@@ -9,6 +10,11 @@ from ..models import CommandRequest, CommandResponse, CommandType, ScriptManifes
 from ..core.manager import manager
 from ..kafka.producer import send_command
 from ..services.status import get_environment_status
+from ..services.system import execute_system_command
+
+# (EN) The base directory for downloads. For security, no file outside this directory can be accessed.
+# (ES) El directorio base para las descargas. Por seguridad, no se podrá acceder a ningún archivo fuera de él.
+DOWNLOADS_BASE_DIR = Path.home()
 
 # (EN) Create an APIRouter. This is like a mini-FastAPI app.
 # (ES) Creamos un APIRouter. Es como una mini-aplicación de FastAPI.
@@ -27,6 +33,28 @@ async def get_dashboard_es():
 @router.get("/en", response_class=FileResponse)
 async def get_dashboard_en():
     return os.path.join(STATIC_DIR, "en.html")
+
+# --- Downloads Route ---
+@router.get("/downloads", response_class=FileResponse)
+async def get_downloadable_file(file_path: str = Query(..., alias="file")):
+    """
+    (EN) Securely serves a file from the designated downloads directory.
+    (ES) Sirve de forma segura un archivo desde el directorio de descargas designado.
+    """
+    try:
+        # (EN) Resolve the path relative to the new, more general base directory.
+        # (ES) Resolvemos la ruta relativa al nuevo y más general directorio base.
+        secure_path = DOWNLOADS_BASE_DIR.joinpath(Path(file_path).name).resolve()
+        
+        # (EN) SECURITY CHECK: This logic remains the same and is now more flexible.
+        # (ES) COMPROBACIÓN DE SEGURIDAD: Esta lógica sigue igual y ahora es más flexible.
+        if DOWNLOADS_BASE_DIR.resolve() in secure_path.parents and secure_path.is_file():
+            return FileResponse(secure_path)
+        else:
+            raise HTTPException(status_code=404, detail="File not found or access denied.")
+            
+    except Exception:
+         raise HTTPException(status_code=404, detail="File not found.")
 
 # --- WebSocket Route ---
 @router.websocket("/ws")
